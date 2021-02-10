@@ -21,10 +21,13 @@ LABEL maintainer="Dario Palladino <dario.pad@gmail.com" \
     org.label-schema.vcs-ref=$VCS_REF \
     org.label-schema.name="dariopad/github-agent-php" \
     org.label-schema.description="Dockerized GitHub Actions runner with Composer and PHP7. Forked from https://github.com/tcardonne/docker-github-runner" \
-    org.label-schema.url="https://github.com/dariopalladino/docker-github-runner" \
-    org.label-schema.vcs-url="https://github.com/dariopalladino/docker-github-runner" \
+    org.label-schema.url="https://github.com/dariopalladino/github-agent-php" \
+    org.label-schema.vcs-url="https://github.com/dariopalladino/github-agent-php" \
     org.label-schema.vendor="Dario Palladino" \
     org.label-schema.docker.cmd="docker run -it dariopad/github-agent-php:latest"
+
+RUN apt-get update && apt-get install -y supervisor jq \
+    && apt-get clean
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

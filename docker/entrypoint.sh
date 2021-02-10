@@ -40,6 +40,19 @@ fi
 if [[ -f ".runner" ]]; then
     echo "Runner already configured. Skipping config."
 else
+    #Check for one file that should exist either as a Symlink or a concrete file.
+    if [[ ! -f "./bin/libSystem.Security.Cryptography.Native.OpenSsl.so" ]]; then
+        echo "setting up symlinks..."
+        cd bin/
+        for lib in $(find . -name 'System.*'); do
+            toFile=$(echo "$lib" | sed -e 's/\.\/System\./.\/libSystem./g')
+            if ! [ -f $toFile ]; then
+                ln -s $lib $toFile
+            fi
+        done
+        cd ..
+        echo "done!"    
+    fi
     if [[ ! -z $RUNNER_ORGANIZATION_URL ]]; then
         SCOPE="orgs"
         RUNNER_URL="${RUNNER_ORGANIZATION_URL}"
